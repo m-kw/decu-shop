@@ -9,8 +9,8 @@ import { Homepage } from './components/views/Homepage/Homepage';
 
 const theme = createMuiTheme({
   palette: {
-    primary: { main: '#130f40' },
-    secondary: { main: '#f9ca24' },
+    primary: { main: '#ffb8b8' },
+    secondary: { main: '#67e6dc' },
   },
 });
 
