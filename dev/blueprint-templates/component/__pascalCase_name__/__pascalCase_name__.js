@@ -31,7 +31,7 @@ Component.propTypes = {
 // const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  Component as { { pascalCase name } },
-// Container as {{pascalCase name}},
-Component as {{ pascalCase name }}Component,
+  Component as {{ pascalCase name }},
+  // Container as {{pascalCase name}},
+  Component as {{ pascalCase name }}Component,
 };
