@@ -1,23 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Container from '@material-ui/core/Container';
-
 import clsx from 'clsx';
 
-import { Products } from '../../features/Products/Products';
+import { ProductBox } from '../../common/ProductBox/ProductBox';
 
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
-import styles from './Homepage.module.scss';
+import styles from './Products.module.scss';
 
 const Component = ({ className }) => (
   <div className={clsx(className, styles.root)}>
-    <Container maxWidth="lg">
-      <h2>Homepage</h2>
-      <Products />
-    </Container>
+    <h2>Products</h2>
+    <ProductBox />
   </div>
 );
 
@@ -37,7 +33,7 @@ Component.propTypes = {
 // const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  Component as Homepage,
-  // Container as Homepage,
-  Component as HomepageComponent,
+  Component as Products,
+  // Container as Products,
+  Component as ProductsComponent,
 };
