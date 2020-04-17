@@ -7,6 +7,8 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 
+import { TopBar } from '../TopBar/TopBar';
+
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
@@ -14,6 +16,7 @@ import styles from './Header.module.scss';
 
 const Component = ({ className }) => (
   <div className={clsx(className, styles.root)}>
+    <TopBar />
     <AppBar position="static">
       <Toolbar className={styles.toolbar}>
 
@@ -26,7 +29,6 @@ const Component = ({ className }) => (
           <Button color="inherit">Categories</Button>
           <Button color="inherit">About</Button>
           <Button color="inherit">Contact</Button>
-          <Button color="inherit">Cart</Button>
         </div>
 
       </Toolbar>

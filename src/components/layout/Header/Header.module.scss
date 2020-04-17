@@ -11,8 +11,13 @@
 
     .menu {
 
-      button:hover {
+      button {
+        font-size: 1rem;
+        padding: 15px;
+
+        &:hover {
         color: $font-light;
+        }
       }
     }
   }
