@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Container from '@material-ui/core/Container';
+
 import clsx from 'clsx';
 
 // import { connect } from 'react-redux';
@@ -8,10 +10,11 @@ import clsx from 'clsx';
 
 import styles from './Homepage.module.scss';
 
-const Component = ({ className, children }) => (
+const Component = ({ className }) => (
   <div className={clsx(className, styles.root)}>
-    <h2>Homepage</h2>
-    {children}
+    <Container maxWidth="lg">
+      <h2>Homepage</h2>
+    </Container>
   </div>
 );
 
