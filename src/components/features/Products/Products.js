@@ -16,10 +16,11 @@ const Component = ({ className, products }) => {
     <div className={clsx(className, styles.root)}>
       <h2>Our products</h2>
 
-      {products.map(el => (
-        <ProductBox key={el.id} {...el} />
-      ))}
-
+      <div className={styles.productsWrapper}>
+        {products.map(el => (
+          <ProductBox key={el.id} {...el} />
+        ))}
+      </div>
     </div>
   );
 };
