@@ -9,7 +9,7 @@ export const initialState = {
         category: 'decoupage',
       },
       {
-        id: 1,
+        id: 2,
         title: 'Decu frame',
         price: 5,
         images: ['https://i.ibb.co/yBnWkMs/frame.jpg'],
