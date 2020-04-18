@@ -9,8 +9,8 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import RemoveIcon from '@material-ui/icons/Remove';
+
+import { AmountWidget } from '../../common/AmountWidget/AmountWidget';
 
 import { connect } from 'react-redux';
 import { getById } from '../../../redux/productsRedux.js';
@@ -19,6 +19,24 @@ import styles from './Product.module.scss';
 
 const Component = ({ className, product }) => {
   const { id, title, description, images, price } = product;
+
+  const [value, setValue] = React.useState(1);
+
+  const handleAdd = () => {
+    if (value >= 1 &&  value < 10) {
+      setValue(value + 1);
+    }
+  };
+
+  const handleRemove = () => {
+    if (value <= 10 && value > 1 ) {
+      setValue(value - 1);
+    }
+  };
+
+  const onChange = ({ target }) => {
+    console.log('target', target);
+  };
 
   return (
     <div className={clsx(className, styles.root)}>
@@ -43,9 +61,7 @@ const Component = ({ className, product }) => {
             </div>
             <div className={styles.action}>
               <div className={styles.amount}>
-                <Button color="secondary" variant="contained" size="small"><AddIcon /></Button>
-                <input type="number" />
-                <Button color="secondary" variant="contained" size="small"><RemoveIcon /></Button>
+                <AmountWidget value={value} onAdd={handleAdd} onRemove={handleRemove} onChange={onChange} />
               </div>
               <Button className={styles.submit} color="primary" variant="contained" type="submit">Buy</Button>
             </div>
