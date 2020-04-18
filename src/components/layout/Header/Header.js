@@ -28,7 +28,7 @@ const Component = ({ className }) => (
           <Button color="inherit">Home</Button>
           <Button color="inherit">Categories</Button>
           <Button color="inherit">About</Button>
-          <Button color="inherit">Contact</Button>
+          <Button color="inherit" href="#contact">Contact</Button>
         </div>
 
       </Toolbar>

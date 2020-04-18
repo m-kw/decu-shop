@@ -1,0 +1,28 @@
+@import '../../../styles/settings.scss';
+@import '../../../styles/mixins.scss';
+
+.root {
+  background: $font-light;
+  padding-top: 15px;
+  text-align: center;
+
+  .title {
+    @include title;
+  }
+
+  .contact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 15px;
+    padding-bottom: 15px;
+
+    .contactForm {
+      flex: 1;
+      margin-right: 30px;
+    }
+
+    // .content {
+    // }
+  }
+}

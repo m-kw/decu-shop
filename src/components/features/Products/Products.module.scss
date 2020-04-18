@@ -1,10 +1,11 @@
 @import '../../../styles/settings.scss';
+@import '../../../styles/mixins.scss';
 
 .root {
   text-align: center;
 
   .title {
-    margin: 35px auto;
+    @include title;
   }
 
   .productsWrapper {

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Header } from '../Header/Header';
 import { Footer } from '../../layout/Footer/Footer';
+import { Contact } from '../../layout/Contact/Contact';
 
 import clsx from 'clsx';
 
@@ -15,6 +16,7 @@ const Component = ({ className, children }) => (
   <div className={clsx(className, styles.root)}>
     <Header />
     {children}
+    <Contact />
     <Footer />
   </div>
 );
