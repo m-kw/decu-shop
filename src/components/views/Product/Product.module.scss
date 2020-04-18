@@ -1,4 +1,56 @@
 @import '../../../styles/settings.scss';
+@import '../../../styles/mixins.scss';
 
-// .root {
-// }
+.root {
+  margin: 35px auto;
+
+  .card {
+    text-align: center;
+
+    .title {
+      @include title;
+    }
+
+    .content {
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+    }
+
+    .description {
+      flex: 2 2 60%;
+      border: 1px $background-light solid;
+      padding: 15px;
+      margin-right: 15px;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .images {
+      flex: 1 1 30%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+
+      .image {
+        width: 150px;
+        height: 150px;
+        margin: 10px;
+      }
+    }
+
+    .action {
+      flex: 3 3 100%;
+      display: flex;
+
+      input {
+        margin: 0 10px;
+      }
+
+      .submit {
+        margin-left: 15px;
+        width: 150px;
+      }
+    }
+  }
+}
