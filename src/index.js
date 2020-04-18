@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import App from './App';
 import { store } from './redux/store';
 
+import './styles/bootstrap.scss';
 import './styles/global.scss';
 
 ReactDOM.render(

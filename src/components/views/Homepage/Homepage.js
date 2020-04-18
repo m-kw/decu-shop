@@ -15,7 +15,6 @@ import styles from './Homepage.module.scss';
 const Component = ({ className }) => (
   <div className={clsx(className, styles.root)}>
     <Container maxWidth="lg">
-      <h2>Homepage</h2>
       <Products />
     </Container>
   </div>

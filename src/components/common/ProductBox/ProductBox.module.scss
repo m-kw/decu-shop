@@ -12,6 +12,10 @@
       object-fit: cover;
     }
 
+    .actionArea:hover {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
     .content {
       display: flex;
       flex-direction: column;
@@ -37,6 +41,7 @@
 
     &:hover .actions {
       display: flex;
+      justify-content: center;
     }
   }
 }

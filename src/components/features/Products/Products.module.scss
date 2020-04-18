@@ -3,11 +3,16 @@
 .root {
   text-align: center;
 
+  .title {
+    margin: 35px auto;
+  }
+
   .productsWrapper {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
     align-items: center;
+    margin-top: 35px;
   }
 }
