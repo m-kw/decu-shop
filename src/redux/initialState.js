@@ -56,7 +56,18 @@ export const initialState = {
     },
   },
   cart: {
-    products: [],
-    amount: 0,
+    products: [
+      {
+        id: '1',
+        title: 'Decu box',
+        price: 30,
+        images: ['https://i.ibb.co/pzvYhLD/box.png', 'https://i.ibb.co/6r655dF/wooden-Box.png', 'https://i.ibb.co/d53Tj91/boxXmas.jpg'],
+        category: 'decoupage',
+        description: 'Description of the product - decu box',
+        amount: 1,
+      },
+    ],
+    amount: 1,
+    total: 30,
   },
 };

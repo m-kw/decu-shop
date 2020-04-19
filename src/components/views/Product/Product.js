@@ -23,20 +23,8 @@ const Component = ({ className, product, addProduct }) => {
 
   const [value, setValue] = React.useState(1);
 
-  const handleAdd = () => {
-    if (value >= 1 &&  value < 10) {
-      setValue(value + 1);
-    }
-  };
-
-  const handleRemove = () => {
-    if (value <= 10 && value > 1 ) {
-      setValue(value - 1);
-    }
-  };
-
   const onChange = ({ target }) => {
-    console.log('target', target);
+    setValue(parseInt(target.value));
   };
 
   return (
@@ -62,7 +50,7 @@ const Component = ({ className, product, addProduct }) => {
             </div>
             <div className={styles.action}>
               <div className={styles.amount}>
-                <AmountWidget value={value} onAdd={handleAdd} onRemove={handleRemove} onChange={onChange} />
+                <AmountWidget value={value} onChange={onChange} />
               </div>
               <Button className={styles.submit} color="primary" variant="contained" onClick={() => addProduct(product, value)}>Buy</Button>
             </div>
