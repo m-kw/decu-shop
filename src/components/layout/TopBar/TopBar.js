@@ -6,13 +6,20 @@ import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 
+import { Cart } from '../../features/Cart/Cart';
+
 import { connect } from 'react-redux';
 import { getCart } from '../../../redux/cartRedux.js';
 
 import styles from './TopBar.module.scss';
 
 const Component = ({ className, cart }) => {
-  console.log('cart', cart);
+
+  const [isCart, setCart] = React.useState(false);
+
+  const toggleCart = () => {
+    return isCart ? setCart(false) : setCart(true);
+  };
 
   return (
     <div className={clsx(className, styles.root)}>
@@ -22,13 +29,15 @@ const Component = ({ className, cart }) => {
       </div>
 
       <div className={styles.cart}>
-        <Button>
+        <Button onClick={toggleCart}>
           <ShoppingBasketIcon size="large" />
           <div className={styles.cartContent}>
             <span>{parseInt(cart.amount)}</span>
           </div>
         </Button>
       </div>
+
+      {isCart ? <Cart /> : ''}
     </div>
   );
 };

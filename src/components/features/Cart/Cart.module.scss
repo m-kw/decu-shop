@@ -2,7 +2,13 @@
 @import '../../../styles/mixins.scss';
 
 .root {
-  margin: 35px auto;
+  background: transparentize($color: $background-mid, $amount: 0.1);
+  position: fixed;
+  width: 60vw;
+  top: 55px;
+  right: 0;
+  z-index: 9999;
+  padding-bottom: 35px;
 
   .title {
     @include title;

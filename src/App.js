@@ -7,7 +7,6 @@ import { CssBaseline } from '@material-ui/core';
 import { MainLayout } from './components/layout/MainLayout/MainLayout';
 import { Homepage } from './components/views/Homepage/Homepage';
 import { Product } from './components/views/Product/Product';
-import { Cart } from './components/views/Cart/Cart';
 
 const theme = createMuiTheme({
   palette: {
@@ -26,7 +25,6 @@ function App() {
             <Switch>
               <Route exact path='/' component={Homepage} />
               <Route exact path='/products/:id' component={Product} />
-              <Route exact path='/cart' component={Cart} />
             </Switch>
           </MainLayout>
         </ThemeProvider>
