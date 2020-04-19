@@ -10,6 +10,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import Container from '@material-ui/core/Container';
+import Button from '@material-ui/core/Button';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import { AmountWidget } from '../../common/AmountWidget/AmountWidget';
 
@@ -22,32 +25,39 @@ const Component = ({ className, cart, changeAmount }) => {
 
   return (
     <div className={clsx(className, styles.root)}>
-      <h2>Cart</h2>
-      <TableContainer component={Paper}>
-        <Table className={styles.table} aria-label="cart table">
-          <TableHead>
-            <TableRow>
-              <TableCell>Product</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell>Quantity</TableCell>
-              <TableCell>Total</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {cart.products.map(el => (
-              <TableRow key={el.id}>
-                <TableCell>{el.title}</TableCell>
-                <TableCell>$ {el.price}</TableCell>
-                <TableCell>
-                  <AmountWidget value={el.amount} onChange={e => changeAmount({ id: el.id, amount: parseInt(e.target.value) })} />
-                </TableCell>
-                <TableCell>$ {el.price * el.amount}</TableCell>
-                <TableCell></TableCell>
+      <Container>
+        <h2 className={styles.title}>Your cart</h2>
+        <TableContainer component={Paper} className={styles.tableContainer}>
+          <Table className={styles.table} aria-label="cart table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Product</TableCell>
+                <TableCell align="center">Price</TableCell>
+                <TableCell align="center">Quantity</TableCell>
+                <TableCell align="center">Total</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {cart.products.map(el => (
+                <TableRow key={el.id}>
+                  <TableCell>
+                    {el.title}
+                  </TableCell>
+                  <TableCell align="center">$ {el.price}</TableCell>
+                  <TableCell align="center">
+                    <AmountWidget value={el.amount} onChange={e => changeAmount({ id: el.id, amount: parseInt(e.target.value) })} />
+                  </TableCell>
+                  <TableCell align="center">
+                    $ {el.price * el.amount}
+                    <Button color="secondary" variant="outlined" className={styles.delete}><DeleteIcon /></Button>
+                  </TableCell>
+
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Container>
     </div>
   );
 };
@@ -66,10 +76,10 @@ const mapDispatchToProps = dispatch => ({
   changeAmount: (id, amount) => dispatch(changeAmount(id, amount)),
 });
 
-const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const CartContainer = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   // Component as Cart,
-  Container as Cart,
+  CartContainer as Cart,
   Component as CartComponent,
 };
