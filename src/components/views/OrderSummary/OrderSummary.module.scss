@@ -1,4 +1,18 @@
 @import '../../../styles/settings.scss';
+@import '../../../styles/mixins.scss';
 
-// .root {
-// }
+.root {
+  margin: 35px auto;
+
+  .title {
+    @include title;
+  }
+
+  .paper {
+    display: flex;
+
+    .card {
+      margin: 20px;
+    }
+  }
+}

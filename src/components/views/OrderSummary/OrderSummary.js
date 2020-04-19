@@ -3,35 +3,67 @@ import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import Container from '@material-ui/core/Container';
+import Paper from '@material-ui/core/Paper';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import Table from '@material-ui/core/Table';
+import TableRow from '@material-ui/core/TableRow';
+import TableCell from '@material-ui/core/TableCell';
+
+import { connect } from 'react-redux';
+import { getCart } from '../../../redux/cartRedux.js';
 
 import styles from './OrderSummary.module.scss';
 
-const Component = ({ className, children }) => (
+const Component = ({ className, cart }) => (
   <div className={clsx(className, styles.root)}>
-    <h2>OrderSummary</h2>
-    {children}
+    <h2 className={styles.title}>Your order summary</h2>
+    <Container maxWidth="lg">
+      <Paper className={styles.paper}>
+        <Card elevation={3} className={styles.card}>
+          <CardHeader title="Products" />
+          {cart.products.map(el => (
+            <div key={el.id} className={styles.product}>
+              <Table>
+                <TableRow>
+                  <TableCell>{el.title}</TableCell>
+                  <TableCell>{el.notes}</TableCell>
+                  <TableCell>{el.price}</TableCell>
+                  <TableCell>{el.amount}</TableCell>
+                  <TableCell>{el.price * el.amount}</TableCell>
+                </TableRow>
+              </Table>
+            </div>
+          ))}
+        </Card>
+
+        <Card elevation={3} className={styles.card}>
+          <CardHeader title="Cart total" />
+
+        </Card>
+      </Paper>
+    </Container>
   </div>
 );
 
 Component.propTypes = {
-  children: PropTypes.node,
   className: PropTypes.string,
+  cart: PropTypes.object,
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
+const mapStateToProps = state => ({
+  cart: getCart(state),
+});
 
 // const mapDispatchToProps = dispatch => ({
 //   someAction: arg => dispatch(reduxActionCreator(arg)),
 // });
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const OrderContainer = connect(mapStateToProps)(Component);
 
 export {
-  Component as OrderSummary,
-  // Container as OrderSummary,
+  // Component as OrderSummary,
+  OrderContainer as OrderSummary,
   Component as OrderSummaryComponent,
 };
