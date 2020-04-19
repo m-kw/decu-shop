@@ -63,6 +63,7 @@ const Component = ({ className, cart, changeAmount, addNotes, removeProduct }) =
             </TableBody>
           </Table>
         </TableContainer>
+        <Button color="primary" variant="contained" href="/orderSummary">Show my order</Button>
       </Container>
     </div>
   );
