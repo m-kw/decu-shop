@@ -55,4 +55,8 @@ export const initialState = {
       error: false,
     },
   },
+  cart: {
+    products: [],
+    amount: 0,
+  },
 };
