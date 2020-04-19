@@ -25,7 +25,7 @@ const Component = ({ className, cart }) => {
         <Button>
           <ShoppingBasketIcon size="large" />
           <div className={styles.cartContent}>
-            <span>{cart.products.length}</span>
+            <span>{cart.amount}</span>
           </div>
         </Button>
       </div>

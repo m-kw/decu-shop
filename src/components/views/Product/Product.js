@@ -13,11 +13,12 @@ import Button from '@material-ui/core/Button';
 import { AmountWidget } from '../../common/AmountWidget/AmountWidget';
 
 import { connect } from 'react-redux';
-import { getById } from '../../../redux/productsRedux.js';
+import { getById } from '../../../redux/productsRedux';
+import { addProduct } from '../../../redux/cartRedux';
 
 import styles from './Product.module.scss';
 
-const Component = ({ className, product }) => {
+const Component = ({ className, product, addProduct }) => {
   const { id, title, description, images, price } = product;
 
   const [value, setValue] = React.useState(1);
@@ -63,7 +64,7 @@ const Component = ({ className, product }) => {
               <div className={styles.amount}>
                 <AmountWidget value={value} onAdd={handleAdd} onRemove={handleRemove} onChange={onChange} />
               </div>
-              <Button className={styles.submit} color="primary" variant="contained" type="submit">Buy</Button>
+              <Button className={styles.submit} color="primary" variant="contained" onClick={() => addProduct(product, value)}>Buy</Button>
             </div>
           </CardContent>
         </Card>
@@ -75,17 +76,18 @@ const Component = ({ className, product }) => {
 Component.propTypes = {
   className: PropTypes.string,
   product: PropTypes.object,
+  addProduct: PropTypes.func,
 };
 
 const mapStateToProps = (state, props) => ({
   product: getById(state, props.match.params.id),
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const mapDispatchToProps = dispatch => ({
+  addProduct: (product, amount) => dispatch(addProduct({ product, amount })),
+});
 
-const ProductContainer = connect(mapStateToProps)(Component);
+const ProductContainer = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   // Component as Product,

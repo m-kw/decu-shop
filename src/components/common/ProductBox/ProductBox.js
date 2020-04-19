@@ -10,36 +10,39 @@ import Button from '@material-ui/core/Button';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 
 // import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+// import { addProduct } from '../../../redux/cartRedux.js';
 
 import styles from './ProductBox.module.scss';
 
-const Component = ({ className, id, title, images, price }) => (
-  <div className={clsx(className, styles.root)}>
-    <Card className={styles.card}>
-      <div>
-        <img src={images[0]} alt='ooops' className={styles.image} />
-      </div>
+const Component = ({ className, id, title, images, price }) => {
 
-      <div className={styles.actionArea}>
-        <CardContent className={styles.content}>
-          <div className={styles.title}>
-            {title}
-          </div>
+  return (
+    <div className={clsx(className, styles.root)}>
+      <Card className={styles.card}>
+        <div>
+          <img src={images[0]} alt='ooops' className={styles.image} />
+        </div>
 
-          <div className={styles.price}>
-            $ {price}
-          </div>
-        </CardContent>
+        <div className={styles.actionArea}>
+          <CardContent className={styles.content}>
+            <div className={styles.title}>
+              {title}
+            </div>
 
-        <CardActions className={styles.actions}>
-          <Button href={`/products/${id}`} color="primary" variant="contained">More</Button>
-          <Button color="primary" variant="contained"><ShoppingBasketIcon /></Button>
-        </CardActions>
-      </div>
-    </Card>
-  </div>
-);
+            <div className={styles.price}>
+              $ {price}
+            </div>
+          </CardContent>
+
+          <CardActions className={styles.actions}>
+            <Button href={`/products/${id}`} color="primary" variant="contained">More</Button>
+            {/* <Button color="primary" variant="contained"><ShoppingBasketIcon /></Button> */}
+          </CardActions>
+        </div>
+      </Card>
+    </div>
+  );
+};
 
 Component.propTypes = {
   className: PropTypes.string,
@@ -54,10 +57,10 @@ Component.propTypes = {
 // });
 
 // const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
+//   addProduct: (product, amount) => dispatch(addProduct(product, amount)),
 // });
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+// const Container = connect(null, mapDispatchToProps)(Component);
 
 export {
   Component as ProductBox,
