@@ -32,7 +32,7 @@ const Component = ({ className, cart }) => {
         <Button onClick={toggleCart}>
           <ShoppingBasketIcon size="large" />
           <div className={styles.cartContent}>
-            <span>{parseInt(cart.amount)}</span>
+            <span>{`$ ${cart.total} (${parseInt(cart.amount)})`}</span>
           </div>
         </Button>
       </div>

@@ -29,6 +29,7 @@ export const reducer = (statePart = {}, action = {}) => {
         ...statePart,
         products: [...statePart.products, { ...action.payload.product, amount: action.payload.amount } ],
         amount: statePart.amount + action.payload.amount,
+        total: statePart.total + (action.payload.product.price * action.payload.amount),
       };
     }
     case CHANGE_AMOUNT: {
