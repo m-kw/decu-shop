@@ -10,12 +10,14 @@ const ADD_TO_CART = createActionName('ADD_TO_CART');
 const CHANGE_AMOUNT = createActionName('CHANGE_AMOUNT');
 const ADD_NOTES = createActionName('ADD_NOTES');
 const REMOVE_PRODUCT = createActionName('REMOVE_PRODUCT');
+const SEND_ORDER = createActionName('SEND_ORDER');
 
 /* action creators */
 export const addProduct = payload => ({ payload, type: ADD_TO_CART });
 export const changeAmount = payload => ({ payload, type: CHANGE_AMOUNT });
 export const addNotes = payload => ({ payload, type: ADD_NOTES });
 export const removeProduct = payload => ({ payload, type: REMOVE_PRODUCT });
+export const sendOrder = payload => ({ payload, type: SEND_ORDER });
 
 /* thunk creators */
 
@@ -73,6 +75,14 @@ export const reducer = (statePart = {}, action = {}) => {
       return {
         ...statePart,
         products: statePart.products.filter(el => el.id !== action.payload.id),
+      };
+    }
+    case SEND_ORDER: {
+      return {
+        ...statePart,
+        products: [],
+        amount: 0,
+        total: 0,
       };
     }
     default: {

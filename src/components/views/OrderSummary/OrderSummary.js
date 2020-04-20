@@ -15,69 +15,73 @@ import { ProductsSummary } from '../../common/ProductsSummary/ProductsSummary';
 import { CostSummary } from '../../common/CostSummary/CostSummary';
 
 import { connect } from 'react-redux';
-import { getCart } from '../../../redux/cartRedux.js';
+import { getCart, sendOrder } from '../../../redux/cartRedux.js';
 
 import styles from './OrderSummary.module.scss';
 
-const Component = ({ className, cart }) => (
-  <div className={clsx(className, styles.root)}>
-    <h2 className={styles.title}>Your order summary</h2>
-    <Container maxWidth="lg">
-      <Paper className={styles.paper}>
-        <Grid container spacing={1} justify="space-around">
+const Component = ({ className, cart, sendOrder }) => {
 
-          <Grid item xs={12} lg={6}>
-            <Grid container direction="column" justify="center" alignItems="center">
-              <Grid item>
-                <Card elevation={3} className={clsx(styles.card, styles.billing)}>
-                  <CardHeader title="Billing details" />
-                  <BillingDetailsForm />
-                </Card>
+  return (
+    <div className={clsx(className, styles.root)}>
+      <h2 className={styles.title}>Your order summary</h2>
+      <Container maxWidth="lg">
+        <Paper className={styles.paper}>
+          <Grid container spacing={1} justify="space-around">
+
+            <Grid item xs={12} lg={6}>
+              <Grid container direction="column" justify="center" alignItems="center">
+                <Grid item>
+                  <Card elevation={3} className={clsx(styles.card, styles.billing)}>
+                    <CardHeader title="Billing details" />
+                    <BillingDetailsForm cart={cart}>
+                      <Button color="primary" variant="contained" onClick={() => sendOrder(cart)}>Order</Button>
+                    </BillingDetailsForm>
+                  </Card>
+                </Grid>
               </Grid>
-              <Grid item>
-                <Button color="primary" variant="contained">Order</Button>
+            </Grid>
+
+            <Grid item xs={12} lg={4}>
+              <Grid container direction="column" justify="center" alignItems="stretch">
+
+                <Grid item>
+                  <Card elevation={3} className={clsx(styles.card, styles.products)}>
+                    <CardHeader title="Products" />
+                    <ProductsSummary cart={cart} />
+                  </Card>
+                </Grid>
+
+                <Grid item>
+                  <Card elevation={3} className={clsx(styles.card, styles.total)}>
+                    <CardHeader title="Cart total" />
+                    <CostSummary cart={cart} />
+                  </Card>
+                </Grid>
               </Grid>
             </Grid>
           </Grid>
+        </Paper>
+      </Container>
+    </div>
+  );
+};
 
-          <Grid item xs={12} lg={4}>
-            <Grid container direction="column" justify="center" alignItems="stretch">
-
-              <Grid item>
-                <Card elevation={3} className={clsx(styles.card, styles.products)}>
-                  <CardHeader title="Products" />
-                  <ProductsSummary cart={cart} />
-                </Card>
-              </Grid>
-
-              <Grid item>
-                <Card elevation={3} className={clsx(styles.card, styles.total)}>
-                  <CardHeader title="Cart total" />
-                  <CostSummary cart={cart} />
-                </Card>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Grid>
-      </Paper>
-    </Container>
-  </div>
-);
 
 Component.propTypes = {
   className: PropTypes.string,
   cart: PropTypes.object,
+  sendOrder: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
   cart: getCart(state),
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const mapDispatchToProps = dispatch => ({
+  sendOrder: (cart) => dispatch(sendOrder(cart)),
+});
 
-const OrderContainer = connect(mapStateToProps)(Component);
+const OrderContainer = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   // Component as OrderSummary,

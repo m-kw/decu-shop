@@ -10,7 +10,7 @@ import { Form, Row, Col, FormGroup, Label, Input } from 'reactstrap';
 
 import styles from './BillingDetailsForm.module.scss';
 
-const Component = ({ className }) => (
+const Component = ({ className, children, cart }) => (
   <div className={clsx(className, styles.root)}>
     <Form>
       <Row form>
@@ -68,6 +68,7 @@ const Component = ({ className }) => (
           </FormGroup>
         </Col>
       </Row>
+      {children}
     </Form>
   </div>
 );
@@ -75,6 +76,7 @@ const Component = ({ className }) => (
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  cart: PropTypes.object,
 };
 
 // const mapStateToProps = state => ({
