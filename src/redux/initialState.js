@@ -79,5 +79,6 @@ export const initialState = {
     ],
     amount: 2,
     total: 110,
+    delivery: 10,
   },
 };

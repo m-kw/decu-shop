@@ -13,6 +13,7 @@
 
     .card {
       margin: 20px;
+      padding: 10px;
 
       .productDetails {
         display: flex;
@@ -27,6 +28,10 @@
           padding: 5px;
 
         }
+      }
+
+      .total {
+        font-weight: bold;
       }
     }
   }

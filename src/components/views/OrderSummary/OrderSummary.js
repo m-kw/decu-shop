@@ -51,7 +51,22 @@ const Component = ({ className, cart }) => (
         </Card>
         <Card elevation={3} className={styles.card}>
           <CardHeader title="Cart total" />
-
+          <Table>
+            <TableBody>
+              <TableRow>
+                <TableCell>Subtotal</TableCell>
+                <TableCell>$ {cart.total}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell>Delivery</TableCell>
+                <TableCell>$ {cart.delivery}</TableCell>
+              </TableRow>
+              <TableRow>
+                <TableCell className={styles.total}>Total</TableCell>
+                <TableCell className={styles.total}>$ {cart.total + cart.delivery}</TableCell>
+              </TableRow>
+            </TableBody>
+          </Table>
         </Card>
       </Paper>
     </Container>
