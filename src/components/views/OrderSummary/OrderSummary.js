@@ -8,6 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
+import Button from '@material-ui/core/Button';
 
 import { BillingDetailsForm } from '../../common/BillingDetailsForm/BillingDetailsForm';
 import { ProductsSummary } from '../../common/ProductsSummary/ProductsSummary';
@@ -23,16 +24,23 @@ const Component = ({ className, cart }) => (
     <h2 className={styles.title}>Your order summary</h2>
     <Container maxWidth="lg">
       <Paper className={styles.paper}>
-        <Grid container spacing={3} justify="center" alignItems="stretch">
+        <Grid container spacing={1} justify="space-around">
 
-          <Grid item xs={12} lg={5}>
-            <Card elevation={3} className={clsx(styles.card, styles.billing)}>
-              <CardHeader title="Billing details" />
-              <BillingDetailsForm />
-            </Card>
+          <Grid item xs={12} lg={6}>
+            <Grid container direction="column" justify="center" alignItems="center">
+              <Grid item>
+                <Card elevation={3} className={clsx(styles.card, styles.billing)}>
+                  <CardHeader title="Billing details" />
+                  <BillingDetailsForm />
+                </Card>
+              </Grid>
+              <Grid item>
+                <Button color="primary" variant="contained">Order</Button>
+              </Grid>
+            </Grid>
           </Grid>
 
-          <Grid item xs={12} lg={5}>
+          <Grid item xs={12} lg={4}>
             <Grid container direction="column" justify="center" alignItems="stretch">
 
               <Grid item>
