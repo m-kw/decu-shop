@@ -15,5 +15,17 @@
       margin: 20px;
       padding: 10px;
     }
+
+    .products {
+      order: 2;
+    }
+
+    .total {
+      order: 3;
+    }
+
+    .billing {
+      order: 1;
+    }
   }
 }

@@ -13,7 +13,6 @@ import styles from './BillingDetailsForm.module.scss';
 const Component = ({ className }) => (
   <div className={clsx(className, styles.root)}>
     <Form>
-      <h3>Billing details</h3>
       <FormGroup>
         <Label for="first-name">First name</Label>
         <Input type="text" id="first-name" name="name" required />

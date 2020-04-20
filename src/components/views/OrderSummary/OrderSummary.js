@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 import Container from '@material-ui/core/Container';
 import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 
@@ -22,19 +23,34 @@ const Component = ({ className, cart }) => (
     <h2 className={styles.title}>Your order summary</h2>
     <Container maxWidth="lg">
       <Paper className={styles.paper}>
-        <Card elevation={3} className={styles.card}>
-          <CardHeader title="Products" />
-          <ProductsSummary cart={cart}/>
-        </Card>
+        <Grid container spacing={3} justify="center" alignItems="stretch">
 
-        <Card elevation={3} className={styles.card}>
-          <CardHeader title="Cart total" />
-          <CostSummary cart={cart} />
-        </Card>
+          <Grid item xs={12} lg={5}>
+            <Card elevation={3} className={clsx(styles.card, styles.billing)}>
+              <CardHeader title="Billing details" />
+              <BillingDetailsForm />
+            </Card>
+          </Grid>
 
-        <Card elevation={3}>
-          <BillingDetailsForm />
-        </Card>
+          <Grid item xs={12} lg={5}>
+            <Grid container direction="column" justify="center" alignItems="stretch">
+
+              <Grid item>
+                <Card elevation={3} className={clsx(styles.card, styles.products)}>
+                  <CardHeader title="Products" />
+                  <ProductsSummary cart={cart} />
+                </Card>
+              </Grid>
+
+              <Grid item>
+                <Card elevation={3} className={clsx(styles.card, styles.total)}>
+                  <CardHeader title="Cart total" />
+                  <CostSummary cart={cart} />
+                </Card>
+              </Grid>
+            </Grid>
+          </Grid>
+        </Grid>
       </Paper>
     </Container>
   </div>
