@@ -13,6 +13,21 @@
 
     .card {
       margin: 20px;
+
+      .productDetails {
+        display: flex;
+        flex-direction: column;
+
+        .productTitle {
+          font-weight: bold;
+        }
+
+        .notes {
+          background: $background-light;
+          padding: 5px;
+
+        }
+      }
     }
   }
 }

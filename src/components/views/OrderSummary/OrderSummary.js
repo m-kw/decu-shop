@@ -8,6 +8,8 @@ import Paper from '@material-ui/core/Paper';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import Table from '@material-ui/core/Table';
+import TableHead from '@material-ui/core/TableHead';
+import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 
@@ -23,21 +25,30 @@ const Component = ({ className, cart }) => (
       <Paper className={styles.paper}>
         <Card elevation={3} className={styles.card}>
           <CardHeader title="Products" />
-          {cart.products.map(el => (
-            <div key={el.id} className={styles.product}>
-              <Table>
-                <TableRow>
-                  <TableCell>{el.title}</TableCell>
-                  <TableCell>{el.notes}</TableCell>
-                  <TableCell>{el.price}</TableCell>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Product</TableCell>
+                <TableCell>Price</TableCell>
+                <TableCell>Amount</TableCell>
+                <TableCell>Total</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {cart.products.map(el => (
+                <TableRow key={el.id}>
+                  <TableCell className={styles.productDetails}>
+                    <span className={styles.productTitle}>{el.title}</span>
+                    <div className={styles.notes}>{el.notes ? el.notes : 'Not personalized'}</div>
+                  </TableCell>
+                  <TableCell>$ {el.price}</TableCell>
                   <TableCell>{el.amount}</TableCell>
-                  <TableCell>{el.price * el.amount}</TableCell>
+                  <TableCell>$ {el.price * el.amount}</TableCell>
                 </TableRow>
-              </Table>
-            </div>
-          ))}
+              ))}
+            </TableBody>
+          </Table>
         </Card>
-
         <Card elevation={3} className={styles.card}>
           <CardHeader title="Cart total" />
 
