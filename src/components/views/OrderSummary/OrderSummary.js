@@ -13,6 +13,7 @@ import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
 import { BillingDetailsForm } from '../../common/BillingDetailsForm/BillingDetailsForm';
+import { ProductsSummary } from '../../common/ProductsSummary/ProductsSummary';
 
 import { connect } from 'react-redux';
 import { getCart } from '../../../redux/cartRedux.js';
@@ -26,29 +27,7 @@ const Component = ({ className, cart }) => (
       <Paper className={styles.paper}>
         <Card elevation={3} className={styles.card}>
           <CardHeader title="Products" />
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Product</TableCell>
-                <TableCell>Price</TableCell>
-                <TableCell>Amount</TableCell>
-                <TableCell>Total</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {cart.products.map(el => (
-                <TableRow key={el.id}>
-                  <TableCell className={styles.productDetails}>
-                    <span className={styles.productTitle}>{el.title}</span>
-                    <div className={styles.notes}>{el.notes ? el.notes : 'Not personalized'}</div>
-                  </TableCell>
-                  <TableCell>$ {el.price}</TableCell>
-                  <TableCell>{el.amount}</TableCell>
-                  <TableCell>$ {el.price * el.amount}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+          <ProductsSummary cart={cart}/>
         </Card>
 
         <Card elevation={3} className={styles.card}>
