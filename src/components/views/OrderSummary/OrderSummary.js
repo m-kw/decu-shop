@@ -12,6 +12,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
+import { BillingDetailsForm } from '../../common/BillingDetailsForm/BillingDetailsForm';
 
 import { connect } from 'react-redux';
 import { getCart } from '../../../redux/cartRedux.js';
@@ -49,6 +50,7 @@ const Component = ({ className, cart }) => (
             </TableBody>
           </Table>
         </Card>
+
         <Card elevation={3} className={styles.card}>
           <CardHeader title="Cart total" />
           <Table>
@@ -67,6 +69,10 @@ const Component = ({ className, cart }) => (
               </TableRow>
             </TableBody>
           </Table>
+        </Card>
+
+        <Card elevation={3}>
+          <BillingDetailsForm />
         </Card>
       </Paper>
     </Container>
