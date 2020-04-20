@@ -1,4 +1,18 @@
 @import '../../../styles/settings.scss';
 
-// .root {
-// }
+.root {
+
+  .productDetails {
+    display: flex;
+    flex-direction: column;
+
+    .productTitle {
+      font-weight: bold;
+    }
+
+    .notes {
+      background: $background-light;
+      padding: 5px;
+    }
+  }
+}
