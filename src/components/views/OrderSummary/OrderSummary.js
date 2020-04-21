@@ -21,6 +21,23 @@ import styles from './OrderSummary.module.scss';
 
 const Component = ({ className, cart, sendOrder }) => {
 
+  const [client, setClient] = React.useState({
+    firstName: '',
+    lastName: '',
+    address: '',
+    postCode: '',
+    city: '',
+    country: '',
+    phone: '',
+    email: '',
+  });
+
+  const handleChange = ({ target }) => {
+    const { name, value } = target;
+
+    setClient({ ...client, [name]: value });
+  };
+
   return (
     <div className={clsx(className, styles.root)}>
       <h2 className={styles.title}>Your order summary</h2>
@@ -33,8 +50,8 @@ const Component = ({ className, cart, sendOrder }) => {
                 <Grid item>
                   <Card elevation={3} className={clsx(styles.card, styles.billing)}>
                     <CardHeader title="Billing details" />
-                    <BillingDetailsForm cart={cart}>
-                      <Button color="primary" variant="contained" onClick={() => sendOrder(cart)}>Order</Button>
+                    <BillingDetailsForm onChange={handleChange} client={client}>
+                      <Button color="primary" variant="contained" onClick={() => sendOrder({ cart: cart, client: client})}>Order</Button>
                     </BillingDetailsForm>
                   </Card>
                 </Grid>
@@ -78,7 +95,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  sendOrder: (cart) => dispatch(sendOrder(cart)),
+  sendOrder: (cart, client) => dispatch(sendOrder(cart, client)),
 });
 
 const OrderContainer = connect(mapStateToProps, mapDispatchToProps)(Component);
