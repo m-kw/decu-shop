@@ -27,7 +27,7 @@ export const reducer = (statePart = {}, action = {}) => {
   console.log('action', action);
   switch (action.type) {
     case ADD_TO_CART: {
-      const { products, total } = statePart;
+      const { products } = statePart;
       const { id, price } = action.payload.product;
 
       let isInCart = false;

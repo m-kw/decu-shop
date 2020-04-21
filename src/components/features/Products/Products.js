@@ -13,7 +13,7 @@ import { getAll } from '../../../redux/productsRedux.js';
 import styles from './Products.module.scss';
 
 const Component = ({ className, products }) => {
-  console.log('products', products);
+
   return (
     <div className={clsx(className, styles.root)}>
       <h2 className={styles.title}>Our products</h2>

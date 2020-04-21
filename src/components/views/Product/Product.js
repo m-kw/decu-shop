@@ -19,7 +19,7 @@ import { addProduct } from '../../../redux/cartRedux';
 import styles from './Product.module.scss';
 
 const Component = ({ className, product, addProduct }) => {
-  const { id, title, description, images, price } = product;
+  const { title, description, images, price } = product;
 
   const [value, setValue] = React.useState(1);
 
