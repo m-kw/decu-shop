@@ -36,7 +36,7 @@ export const loadProductsRequest = () => {
 
     try {
       let res = await axios.get(`${API_URL}/products`);
-      dispatch(loadProductsRequest(res.data));
+      dispatch(loadProducts(res.data));
       dispatch(endRequest());
     }
     catch (err) {
@@ -45,9 +45,19 @@ export const loadProductsRequest = () => {
   };
 };
 
+/* initialState */
+  const initialState = {
+    data: [],
+    request: {
+      pending: false,
+      error: null,
+      success: null,
+    },
+  };
+
 /* reducer */
-export default function reducer(statePart = {}, action = {}) {
-  console.log('state prod', statePart);
+export const reducer = (statePart = initialState, action = {}) => {
+
   switch (action.type) {
     case LOAD_PRODUCTS:
       return { ...statePart, data: [...action.payload] };

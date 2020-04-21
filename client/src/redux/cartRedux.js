@@ -23,8 +23,7 @@ export const sendOrder = payload => ({ payload, type: SEND_ORDER });
 
 /* reducer */
 export const reducer = (statePart = {}, action = {}) => {
-  console.log('state', statePart);
-  console.log('action', action);
+
   switch (action.type) {
     case ADD_TO_CART: {
       const { products } = statePart;
