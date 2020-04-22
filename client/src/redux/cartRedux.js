@@ -21,8 +21,21 @@ export const sendOrder = payload => ({ payload, type: SEND_ORDER });
 
 /* thunk creators */
 
+/* initial state */
+const initialState = {
+  products: [],
+  amount: 0,
+  total: 0,
+  delivery: 10,
+  request: {
+    pending: false,
+    error: null,
+    success: null,
+  },
+};
+
 /* reducer */
-export const reducer = (statePart = {}, action = {}) => {
+export const reducer = (statePart = initialState, action = {}) => {
 
   switch (action.type) {
     case ADD_TO_CART: {
@@ -32,7 +45,7 @@ export const reducer = (statePart = {}, action = {}) => {
       let isInCart = false;
 
       for (let product of products) {
-        if (product.id === action.payload.product.id) {
+        if (product._id === id) {
           isInCart = true;
         }
       }
@@ -42,7 +55,7 @@ export const reducer = (statePart = {}, action = {}) => {
       return {
         ...statePart,
         products: products.map(el => {
-          return el.id === id ?
+          return el._id === id ?
             { ...el, amount: el.amount + action.payload.amount }
             : el;
         }),
@@ -54,7 +67,7 @@ export const reducer = (statePart = {}, action = {}) => {
       return {
         ...statePart,
         products: statePart.products.map(el => {
-          return el.id === action.payload.id ?
+          return el._id === action.payload.id ?
             { ...el, amount: action.payload.amount }
             : el;
         }),
@@ -64,7 +77,7 @@ export const reducer = (statePart = {}, action = {}) => {
       return {
         ...statePart,
         products: statePart.products.map(el => {
-          return el.id === action.payload.id ?
+          return el._id === action.payload.id ?
             { ...el, notes: action.payload.notes }
             : el;
         }),
@@ -73,7 +86,7 @@ export const reducer = (statePart = {}, action = {}) => {
     case REMOVE_PRODUCT: {
       return {
         ...statePart,
-        products: statePart.products.filter(el => el.id !== action.payload.id),
+        products: statePart.products.filter(el => el._id !== action.payload.id),
       };
     }
     case SEND_ORDER: {

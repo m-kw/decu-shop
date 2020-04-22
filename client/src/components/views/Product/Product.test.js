@@ -10,6 +10,11 @@ const mockProps = {
     description: 'test description',
     images: ['abc.jpg'],
   },
+  request: {
+    pending: false,
+    error: null,
+    success: null,
+  },
 };
 
 describe('Component Product', () => {
