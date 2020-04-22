@@ -9,71 +9,99 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Divider from '@material-ui/core/Divider';
 import Button from '@material-ui/core/Button';
+import { Alert, Progress } from 'reactstrap';
 
 import { AmountWidget } from '../../common/AmountWidget/AmountWidget';
 
 import { connect } from 'react-redux';
-import { getById } from '../../../redux/productsRedux';
+import { getAll, getRequest, loadProductsRequest } from '../../../redux/productsRedux';
 import { addProduct } from '../../../redux/cartRedux';
 
 import styles from './Product.module.scss';
 
-const Component = ({ className, product, addProduct }) => {
-  const { title, description, images, price } = product;
+class Component extends React.Component {
 
-  const [value, setValue] = React.useState(1);
+  state = {
+    value: 1,
+  }
 
-  const onChange = ({ target }) => {
-    setValue(parseInt(target.value));
+  static propTypes = {
+    className: PropTypes.string,
+    addProduct: PropTypes.func,
+    products: PropTypes.array,
+    request: PropTypes.object,
+    match: PropTypes.shape({
+      params: PropTypes.shape({
+        id: PropTypes.string,
+      }),
+    }),
   };
 
-  return (
-    <div className={clsx(className, styles.root)}>
-      <Container maxWidth="lg">
-        <Card className={styles.card}>
+  onChange = ({ target }) => {
+    this.setState({ ...this.state, value: parseInt(target.value) });
+  };
 
-          <h2 className={styles.title}>{title}</h2>
-          <Divider variant="middle" />
+  componentDidMount() {
+    const { loadProducts } = this.props;
+    loadProducts();
+  };
 
-          <CardContent className={styles.content}>
-            <div className={styles.description}>{description}</div>
-            <div className={styles.images}>
-              {images.map(el => (
-                <CardMedia
-                  key={el}
-                  component="img"
-                  alt="decu box"
-                  image={el}
-                  className={styles.image}
-                />
-              ))}
-            </div>
-            <div className={styles.action}>
-              <div className={styles.amount}>
-                <AmountWidget value={value} onChange={onChange} />
-                <div className={styles.total}>$ {price * value}</div>
-              </div>
-              <Button className={styles.submit} color="primary" variant="contained" onClick={() => addProduct(product, value)}>Buy</Button>
-            </div>
-          </CardContent>
-        </Card>
-      </Container>
-    </div>
-  );
-};
+  render() {
+    const { className, products, addProduct, request, match } = this.props;
+    const { value } = this.state;
 
-Component.propTypes = {
-  className: PropTypes.string,
-  product: PropTypes.object,
-  addProduct: PropTypes.func,
-};
+    if (request.pending) return <Progress animated color="primary" value={50} />;
+    else if (request.error) return <Alert color="warning">{request.error}</Alert>;
+    else if (!request.success || !products.length) return <Alert color="info">No concerts</Alert>;
+    else if (request.success)
 
-const mapStateToProps = (state, props) => ({
-  product: getById(state, props.match.params.id),
+    return (
+      <div className={clsx(className, styles.root)}>
+        {products.filter(el => el._id === match.params.id).map(product => (
+          <Container maxWidth="lg" key={product._id}>
+            <Card className={styles.card}>
+
+              <h2 className={styles.title}>{product.title}</h2>
+              <Divider variant="middle" />
+
+              <CardContent className={styles.content}>
+                <div className={styles.description}>{product.description}</div>
+                <div className={styles.images}>
+                  {product.images.map(el => (
+                    <CardMedia
+                      key={el}
+                      component="img"
+                      alt="decu box"
+                      image={el}
+                      className={styles.image}
+                    />
+                  ))}
+                </div>
+                <div className={styles.action}>
+                  <div className={styles.amount}>
+                    <AmountWidget value={this.state.value} onChange={e => this.onChange(e)} />
+                    <div className={styles.total}>$ {product.price * value}</div>
+                  </div>
+                  <Button className={styles.submit} color="primary" variant="contained" onClick={() => addProduct(product, value)}>Buy</Button>
+                </div>
+              </CardContent>
+            </Card>
+          </Container>
+        ))}
+
+      </div>
+    );
+  }
+}
+
+const mapStateToProps = state => ({
+  products: getAll(state),
+  request: getRequest(state),
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   addProduct: (product, amount) => dispatch(addProduct({ product, amount })),
+  loadProducts: () => dispatch(loadProductsRequest()),
 });
 
 const ProductContainer = connect(mapStateToProps, mapDispatchToProps)(Component);

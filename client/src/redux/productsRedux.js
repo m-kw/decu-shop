@@ -4,7 +4,7 @@ import { API_URL } from '../config';
 /* selectors */
 export const getAll = ({ products }) => products.data;
 export const getById = ({ products }, id) => {
-  const prodArray = products.data.filter(el => el.id === id);
+  const prodArray = products.data.filter(el => el._id === id);
   return prodArray[0];
 };
 export const getRequest = ({ products }) => products.request;
@@ -57,7 +57,8 @@ export const loadProductsRequest = () => {
 
 /* reducer */
 export const reducer = (statePart = initialState, action = {}) => {
-
+  console.log('state', statePart);
+  console.log('action', action);
   switch (action.type) {
     case LOAD_PRODUCTS:
       return { ...statePart, data: [...action.payload] };

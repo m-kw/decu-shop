@@ -35,7 +35,7 @@ class Component extends React.Component {
 
         <div className={styles.productsWrapper}>
           {products.map(el => (
-            <ProductBox key={el.id} {...el} className='col-lg-3 col-12' />
+            <ProductBox key={el._id} {...el} className='col-lg-3 col-12' />
           ))}
         </div>
       </div>
