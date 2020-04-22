@@ -35,6 +35,7 @@ class Component extends React.Component {
         id: PropTypes.string,
       }),
     }),
+    loadProducts: PropTypes.func,
   };
 
   onChange = ({ target }) => {
@@ -44,7 +45,7 @@ class Component extends React.Component {
   componentDidMount() {
     const { loadProducts } = this.props;
     loadProducts();
-  };
+  }
 
   render() {
     const { className, products, addProduct, request, match } = this.props;
@@ -55,42 +56,41 @@ class Component extends React.Component {
     else if (!request.success || !products.length) return <Alert color="info">No concerts</Alert>;
     else if (request.success)
 
-    return (
-      <div className={clsx(className, styles.root)}>
-        {products.filter(el => el._id === match.params.id).map(product => (
-          <Container maxWidth="lg" key={product._id}>
-            <Card className={styles.card}>
+      return (
+        <div className={clsx(className, styles.root)}>
+          {products.filter(el => el._id === match.params.id).map(product => (
+            <Container maxWidth="lg" key={product._id}>
+              <Card className={styles.card}>
 
-              <h2 className={styles.title}>{product.title}</h2>
-              <Divider variant="middle" />
+                <h2 className={styles.title}>{product.title}</h2>
+                <Divider variant="middle" />
 
-              <CardContent className={styles.content}>
-                <div className={styles.description}>{product.description}</div>
-                <div className={styles.images}>
-                  {product.images.map(el => (
-                    <CardMedia
-                      key={el}
-                      component="img"
-                      alt="decu box"
-                      image={el}
-                      className={styles.image}
-                    />
-                  ))}
-                </div>
-                <div className={styles.action}>
-                  <div className={styles.amount}>
-                    <AmountWidget value={this.state.value} onChange={e => this.onChange(e)} />
-                    <div className={styles.total}>$ {product.price * value}</div>
+                <CardContent className={styles.content}>
+                  <div className={styles.description}>{product.description}</div>
+                  <div className={styles.images}>
+                    {product.images.map(el => (
+                      <CardMedia
+                        key={el}
+                        component="img"
+                        alt="decu box"
+                        image={el}
+                        className={styles.image}
+                      />
+                    ))}
                   </div>
-                  <Button className={styles.submit} color="primary" variant="contained" onClick={() => addProduct(product, value)}>Buy</Button>
-                </div>
-              </CardContent>
-            </Card>
-          </Container>
-        ))}
-
-      </div>
-    );
+                  <div className={styles.action}>
+                    <div className={styles.amount}>
+                      <AmountWidget value={this.state.value} onChange={e => this.onChange(e)} />
+                      <div className={styles.total}>$ {product.price * value}</div>
+                    </div>
+                    <Button className={styles.submit} color="primary" variant="contained" onClick={() => addProduct(product, value)}>Buy</Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </Container>
+          ))}
+        </div>
+      );
   }
 }
 
