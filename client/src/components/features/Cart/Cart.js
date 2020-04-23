@@ -39,24 +39,24 @@ const Component = ({ className, cart, changeAmount, addNotes, removeProduct }) =
             </TableHead>
             <TableBody>
               {cart.products.map(el => (
-                <TableRow key={el.id}>
+                <TableRow key={el._id}>
                   <TableCell className={styles.notesWrapper}>
                     {el.title}
                     <textarea
                       value={el.notes}
                       placeholder="Personalize your product here"
-                      onChange={e => addNotes({ id: el.id, notes: e.target.value })}
+                      onChange={e => addNotes({ id: el._id, notes: e.target.value })}
                       className={styles.notes}
                     >
                     </textarea>
                   </TableCell>
                   <TableCell align="center">$ {el.price}</TableCell>
                   <TableCell align="center">
-                    <AmountWidget value={el.amount} onChange={e => changeAmount({ id: el.id, amount: parseInt(e.target.value) })} />
+                    <AmountWidget value={el.amount} onChange={e => changeAmount({ id: el._id, amount: parseInt(e.target.value) })} />
                   </TableCell>
                   <TableCell align="center">
                     $ {el.price * el.amount}
-                    <Button color="secondary" variant="outlined" className={styles.delete} onClick={() => removeProduct({ id: el.id })}><DeleteIcon /></Button>
+                    <Button color="secondary" variant="outlined" className={styles.delete} onClick={() => removeProduct({ id: el._id })}><DeleteIcon /></Button>
                   </TableCell>
                 </TableRow>
               ))}

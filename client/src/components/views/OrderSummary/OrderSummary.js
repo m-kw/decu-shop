@@ -20,6 +20,7 @@ import { getCart, sendOrder } from '../../../redux/cartRedux.js';
 import styles from './OrderSummary.module.scss';
 
 const Component = ({ className, cart, sendOrder }) => {
+  console.log('cart', cart);
 
   const [client, setClient] = React.useState({
     firstName: '',

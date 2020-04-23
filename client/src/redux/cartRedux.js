@@ -36,16 +36,17 @@ const initialState = {
 
 /* reducer */
 export const reducer = (statePart = initialState, action = {}) => {
-
+  console.log('state', statePart);
+  console.log('action', action);
   switch (action.type) {
     case ADD_TO_CART: {
       const { products } = statePart;
-      const { id, price } = action.payload.product;
+      const { _id, price } = action.payload.product;
 
       let isInCart = false;
 
       for (let product of products) {
-        if (product._id === id) {
+        if (product._id === _id) {
           isInCart = true;
         }
       }
@@ -54,11 +55,13 @@ export const reducer = (statePart = initialState, action = {}) => {
 
       return {
         ...statePart,
-        products: products.map(el => {
-          return el._id === id ?
-            { ...el, amount: el.amount + action.payload.amount }
-            : el;
-        }),
+        products: isInCart ?
+          products.map(el => {
+            return el._id === _id ?
+              { ...el, amount: el.amount + action.payload.amount }
+              : el;
+          })
+          : [...products, { ...action.payload.product, amount: action.payload.amount }],
         amount: statePart.amount + action.payload.amount,
         total: statePart.total + (price * action.payload.amount),
       };
