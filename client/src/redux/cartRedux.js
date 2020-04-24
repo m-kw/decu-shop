@@ -1,3 +1,5 @@
+import Axios from "axios";
+
 /* selectors */
 export const getCart = ({ cart }) => cart;
 
@@ -12,6 +14,12 @@ const ADD_NOTES = createActionName('ADD_NOTES');
 const REMOVE_PRODUCT = createActionName('REMOVE_PRODUCT');
 const SEND_ORDER = createActionName('SEND_ORDER');
 
+const START_REQUEST = createActionName('START_REQUEST');
+const END_REQUEST = createActionName('END_REQUEST');
+const ERROR_REQUEST = createActionName('ERROR_REQUEST');
+
+const LOAD_CART = createActionName('LOAD_CART');
+
 /* action creators */
 export const addProduct = payload => ({ payload, type: ADD_TO_CART });
 export const changeAmount = payload => ({ payload, type: CHANGE_AMOUNT });
@@ -19,7 +27,45 @@ export const addNotes = payload => ({ payload, type: ADD_NOTES });
 export const removeProduct = payload => ({ payload, type: REMOVE_PRODUCT });
 export const sendOrder = payload => ({ payload, type: SEND_ORDER });
 
+export const startRequest = () => ({ type: START_REQUEST });
+export const endRequest = () => ({ type: END_REQUEST });
+export const errorRequest = error => ({ error, type: ERROR_REQUEST });
+
+export const loadCart = payload => ({ payload, type: LOAD_CART });
+
 /* thunk creators */
+export const loadCartRequest = () => {
+  return async dispatch => {
+
+    dispatch(startRequest());
+
+    try {
+      let res = await axios.get(`${API_URL}/cart`);
+      dispatch(loadCart(res.data));
+      dispatch(endRequest());
+    }
+    catch (err) {
+      dispatch(errorRequest(err.message));
+    }
+  };
+}
+
+export const saveCartRequest = (cart) => {
+  return async dispatch => {
+
+    dispatch(startRequest());
+
+    try {
+      let res = await axios.post(`${API_URL}/cart`, cart);
+      dispatch(saveCart(res));
+      dispatch(endRequest());
+    }
+    catch (err) {
+      dispatch(errorRequest(err.message));
+    }
+  }
+
+}
 
 /* initial state */
 const initialState = {
@@ -99,6 +145,15 @@ export const reducer = (statePart = initialState, action = {}) => {
         amount: 0,
         total: 0,
       };
+    }
+    case START_REQUEST:
+      return { ...statePart, request: { pending: true, error: null, success: false } };
+    case END_REQUEST:
+      return { ...statePart, request: { pending: false, error: null, success: true } };
+    case ERROR_REQUEST:
+      return { ...statePart, request: { pending: false, error: action.error, success: false } };
+    case LOAD_CART: {
+      return { ...statePart, products: [...action.payload] };
     }
     default: {
       return statePart;
