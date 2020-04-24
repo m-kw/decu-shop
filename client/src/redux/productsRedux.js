@@ -46,14 +46,14 @@ export const loadProductsRequest = () => {
 };
 
 /* initialState */
-  const initialState = {
-    data: [],
-    request: {
-      pending: false,
-      error: null,
-      success: null,
-    },
-  };
+const initialState = {
+  data: [],
+  request: {
+    pending: false,
+    error: null,
+    success: null,
+  },
+};
 
 /* reducer */
 export const reducer = (statePart = initialState, action = {}) => {
@@ -71,4 +71,4 @@ export const reducer = (statePart = initialState, action = {}) => {
     default:
       return statePart;
   }
-}
+};

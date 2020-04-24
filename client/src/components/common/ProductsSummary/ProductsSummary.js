@@ -27,7 +27,7 @@ const Component = ({ className, cart }) => (
       </TableHead>
       <TableBody>
         {cart.products.map(el => (
-          <TableRow key={el.id}>
+          <TableRow key={el._id}>
             <TableCell className={styles.productDetails}>
               <span className={styles.productTitle}>{el.title}</span>
               <div className={styles.notes}>{el.notes ? el.notes : 'Not personalized'}</div>

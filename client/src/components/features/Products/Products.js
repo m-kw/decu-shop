@@ -17,6 +17,7 @@ class Component extends React.Component {
   static propTypes = {
     className: PropTypes.string,
     products: PropTypes.array,
+    loadProducts: PropTypes.func,
   };
 
   componentDidMount() {

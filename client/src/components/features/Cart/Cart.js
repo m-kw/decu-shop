@@ -17,11 +17,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { AmountWidget } from '../../common/AmountWidget/AmountWidget';
 
 import { connect } from 'react-redux';
-import { getCart, changeAmount, addNotes, removeProduct } from '../../../redux/cartRedux.js';
+import { getCart, changeAmount, addNotes, removeProduct, saveCartRequest } from '../../../redux/cartRedux.js';
 
 import styles from './Cart.module.scss';
 
-const Component = ({ className, cart, changeAmount, addNotes, removeProduct }) => {
+const Component = ({ className, cart, changeAmount, addNotes, removeProduct, saveCart }) => {
 
   return (
     <div className={clsx(className, styles.root)}>
@@ -63,7 +63,7 @@ const Component = ({ className, cart, changeAmount, addNotes, removeProduct }) =
             </TableBody>
           </Table>
         </TableContainer>
-        <Button color="primary" variant="contained" href="/orderSummary">Show my order</Button>
+        <Button color="primary" variant="contained" href="/orderSummary" onClick={() => saveCart(cart)}>Show my order</Button>
       </Container>
     </div>
   );
@@ -75,6 +75,7 @@ Component.propTypes = {
   changeAmount: PropTypes.func,
   addNotes: PropTypes.func,
   removeProduct: PropTypes.func,
+  saveCart: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -85,6 +86,7 @@ const mapDispatchToProps = dispatch => ({
   changeAmount: (id, amount) => dispatch(changeAmount(id, amount)),
   addNotes: (id, notes) => dispatch(addNotes(id, notes)),
   removeProduct: (id) => dispatch(removeProduct(id)),
+  saveCart: (cart) => dispatch(saveCartRequest(cart)),
 });
 
 const CartContainer = connect(mapStateToProps, mapDispatchToProps)(Component);

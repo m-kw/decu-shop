@@ -1,5 +1,3 @@
-import Axios from "axios";
-
 /* selectors */
 export const getCart = ({ cart }) => cart;
 
@@ -19,6 +17,7 @@ const END_REQUEST = createActionName('END_REQUEST');
 const ERROR_REQUEST = createActionName('ERROR_REQUEST');
 
 const LOAD_CART = createActionName('LOAD_CART');
+const SAVE_CART = createActionName('SAVE_CART');
 
 /* action creators */
 export const addProduct = payload => ({ payload, type: ADD_TO_CART });
@@ -32,40 +31,22 @@ export const endRequest = () => ({ type: END_REQUEST });
 export const errorRequest = error => ({ error, type: ERROR_REQUEST });
 
 export const loadCart = payload => ({ payload, type: LOAD_CART });
+export const saveCart = payload => ({ payload, type: SAVE_CART });
 
 /* thunk creators */
 export const loadCartRequest = () => {
-  return async dispatch => {
-
-    dispatch(startRequest());
-
-    try {
-      let res = await axios.get(`${API_URL}/cart`);
-      dispatch(loadCart(res.data));
-      dispatch(endRequest());
-    }
-    catch (err) {
-      dispatch(errorRequest(err.message));
-    }
+  return dispatch => {
+    const cart = JSON.parse(localStorage.getItem('cart'));
+    dispatch(loadCart(cart));
   };
-}
+};
 
 export const saveCartRequest = (cart) => {
-  return async dispatch => {
+  return () => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  };
 
-    dispatch(startRequest());
-
-    try {
-      let res = await axios.post(`${API_URL}/cart`, cart);
-      dispatch(saveCart(res));
-      dispatch(endRequest());
-    }
-    catch (err) {
-      dispatch(errorRequest(err.message));
-    }
-  }
-
-}
+};
 
 /* initial state */
 const initialState = {
@@ -153,7 +134,7 @@ export const reducer = (statePart = initialState, action = {}) => {
     case ERROR_REQUEST:
       return { ...statePart, request: { pending: false, error: action.error, success: false } };
     case LOAD_CART: {
-      return { ...statePart, products: [...action.payload] };
+      return { ...action.payload };
     }
     default: {
       return statePart;
