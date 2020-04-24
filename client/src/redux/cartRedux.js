@@ -57,6 +57,8 @@ export const sendOrderRequest = (order) => {
 
     try {
       let res = await axios.post(`${API_URL}/order`, order);
+      console.log('res', res);
+
       dispatch(sendOrder(res));
       dispatch(endRequest());
     }

@@ -15,7 +15,7 @@ import { ProductsSummary } from '../../common/ProductsSummary/ProductsSummary';
 import { CostSummary } from '../../common/CostSummary/CostSummary';
 
 import { connect } from 'react-redux';
-import { getCart, sendOrder } from '../../../redux/cartRedux.js';
+import { getCart, sendOrderRequest } from '../../../redux/cartRedux.js';
 
 import styles from './OrderSummary.module.scss';
 
@@ -38,6 +38,21 @@ const Component = ({ className, cart, sendOrder }) => {
     setClient({ ...client, [name]: value });
   };
 
+  const submitOrder = (e, cart, client) => {
+    e.preventDefault();
+
+    const payload = {
+      cart: {
+        products: cart.products,
+        amount: cart.amount,
+        total: cart.total,
+      },
+      client: client,
+    };
+
+    sendOrder(payload);
+  };
+
   return (
     <div className={clsx(className, styles.root)}>
       <h2 className={styles.title}>Your order summary</h2>
@@ -51,7 +66,7 @@ const Component = ({ className, cart, sendOrder }) => {
                   <Card elevation={3} className={clsx(styles.card, styles.billing)}>
                     <CardHeader title="Billing details" />
                     <BillingDetailsForm onChange={handleChange} client={client}>
-                      <Button color="primary" variant="contained" onClick={() => sendOrder({ cart: cart, client: client})}>Order</Button>
+                      <Button color="primary" variant="contained" onClick={e => submitOrder(e, cart, client)}>Order</Button>
                     </BillingDetailsForm>
                   </Card>
                 </Grid>
@@ -95,7 +110,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  sendOrder: (cart, client) => dispatch(sendOrder(cart, client)),
+  sendOrder: (order) => dispatch(sendOrderRequest(order)),
 });
 
 const OrderContainer = connect(mapStateToProps, mapDispatchToProps)(Component);
