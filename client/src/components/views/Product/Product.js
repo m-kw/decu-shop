@@ -53,7 +53,7 @@ class Component extends React.Component {
 
     if (request.pending) return <Progress animated color="primary" value={50} />;
     else if (request.error) return <Alert color="warning">{request.error}</Alert>;
-    else if (!request.success || !products.length) return <Alert color="info">No concerts</Alert>;
+    else if (!request.success || !products.length) return <Alert color="info">No products</Alert>;
     else if (request.success)
 
       return (

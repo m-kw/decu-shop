@@ -9,6 +9,7 @@ const MongoStore = require('connect-mongo')(session);
 
 const productsRoutes = require('./routes/products.routes');
 const cartRoutes = require('./routes/cart.routes');
+const orderRoutes = require('./routes/order.routes');
 
 dotenv.config();
 
@@ -25,7 +26,8 @@ app.use(express.static(path.join(__dirname + '/client/build')));
 
 /* API ENDPOINTS */
 app.use('/api', productsRoutes);
-app.use('/api', require('./routes/cart.routes'));
+app.use('/api', cartRoutes);
+app.use('/api', orderRoutes);
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname + '/client/build/index.html'));

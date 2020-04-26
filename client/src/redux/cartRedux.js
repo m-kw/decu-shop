@@ -3,6 +3,9 @@ import { API_URL } from '../config';
 
 /* selectors */
 export const getCart = ({ cart }) => cart;
+export const getRequest = ({ cart }) => cart.request;
+export const getTotalPrice = ({ cart }) => cart.products.reduce((total, product) => product.price * product.amount + total, 0);
+export const getTotalAmount = ({ cart }) => cart.products.reduce(( amount, product) => product.amount + amount, 0);
 
 /* action name creator */
 const reducerName = 'cart';
@@ -37,18 +40,48 @@ export const loadCart = payload => ({ payload, type: LOAD_CART });
 export const saveCart = payload => ({ payload, type: SAVE_CART });
 
 /* thunk creators */
-export const loadCartRequest = () => {
-  return dispatch => {
-    const cart = JSON.parse(localStorage.getItem('cart'));
-    dispatch(loadCart(cart));
+export const saveCartRequest = data => {
+  return () => {
+    localStorage.setItem('cart', JSON.stringify(data));
   };
 };
 
-export const saveCartRequest = (cart) => {
-  return () => {
-    localStorage.setItem('cart', JSON.stringify(cart));
+export const loadCartRequest = () => {
+  return dispatch => {
+    let getSavedCart;
+    localStorage.getItem('cart') ?
+      getSavedCart = JSON.parse(localStorage.getItem('cart')) : getSavedCart = [];
+    console.log('cart', getSavedCart);
+
   };
 };
+
+// export const loadCartRequest = () => {
+//   return () => {
+
+//     const cart = {
+//       products: [],
+//       amount: 0,
+//       total: 0,
+//     }
+
+//     localStorage.setItem('cart', JSON.stringify(cart));
+//   };
+// };
+
+// export const addToCartRequest = (data) => {
+//   console.log('data', data);
+//   return dispatch => {
+
+//     const cart = {
+//       products: [...products, { ...data.product, amount: data.amount }],
+//       amount: cart.amount + data.amount,
+//     }
+
+//     localStorage.setItem('cart', JSON.stringify(cart))
+//     dispatch(addProduct(data));
+//   };
+// };
 
 export const sendOrderRequest = (order) => {
   return async dispatch => {
@@ -61,6 +94,7 @@ export const sendOrderRequest = (order) => {
 
       dispatch(sendOrder(res));
       dispatch(endRequest());
+      localStorage.removeItem('cart');
     }
     catch (err) {
       dispatch(errorRequest());
@@ -90,30 +124,38 @@ export const reducer = (statePart = initialState, action = {}) => {
       const { products } = statePart;
       const { _id, price } = action.payload.product;
 
-      let isInCart = false;
+      if (products.length) {
 
-      for (let product of products) {
-        if (product._id === _id) {
-          isInCart = true;
+        let isInCart = false;
+
+        for (let product of products) {
+          if (product._id === _id) {
+            isInCart = true;
+          }
         }
-      }
 
-      console.log('isIncart', isInCart);
-
-      return {
-        ...statePart,
-        products: isInCart ?
-          products.map(el => {
+        return {
+          ...statePart,
+          products: products.map(el => {
             return el._id === _id ?
               { ...el, amount: el.amount + action.payload.amount }
               : el;
-          })
-          : [...products, { ...action.payload.product, amount: action.payload.amount }],
-        amount: statePart.amount + action.payload.amount,
-        total: statePart.total + (price * action.payload.amount),
-      };
+          }),
+          amount: statePart.amount + action.payload.amount,
+          total: statePart.total + (price * action.payload.amount),
+        }
+
+      } else {
+        return {
+          ...statePart,
+          products: [...products, { ...action.payload.product, amount: action.payload.amount }],
+          amount: statePart.amount + action.payload.amount,
+          total: statePart.total + (price * action.payload.amount),
+        };
+      }
     }
     case CHANGE_AMOUNT: {
+
       return {
         ...statePart,
         products: statePart.products.map(el => {
@@ -136,7 +178,7 @@ export const reducer = (statePart = initialState, action = {}) => {
     case REMOVE_PRODUCT: {
       return {
         ...statePart,
-        products: statePart.products.filter(el => el._id !== action.payload.id),
+        products: statePart.products.filter(el => el._id !== action.payload._id),
       };
     }
     case SEND_ORDER: {
@@ -154,7 +196,9 @@ export const reducer = (statePart = initialState, action = {}) => {
     case ERROR_REQUEST:
       return { ...statePart, request: { pending: false, error: action.error, success: false } };
     case LOAD_CART: {
-      return { ...action.payload };
+      return { ...statePart,
+        products: action.payload ? action.payload : [],
+      };
     }
     default: {
       return statePart;

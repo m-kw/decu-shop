@@ -1,18 +1,17 @@
 const Order = require('../models/order.model');
-const Product = require('../models/product.model');
 const sanitize = require('mongo-sanitize');
 
-exports.saveOrder = async (req, res) => {
-    console.log('req.body', req.body);
+exports.postOrder = async (req, res) => {
 
     try {
         const cleanedBody = sanitize(req.body);
-        const { products, client } = cleanedBody;
+        const { cart, client } = cleanedBody;
 
         const newOrder = new Order({
-            products: products,
+            cart: cart,
             client: client,
         });
+
         await newOrder.save();
         res.json(newOrder);
     }
