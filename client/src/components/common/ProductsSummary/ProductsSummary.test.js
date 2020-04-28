@@ -5,7 +5,7 @@ import { ProductsSummaryComponent } from './ProductsSummary';
 const mockProps = {
   cart: {
     products: [
-      { id: '1', title: 'test title', price: 1, notes: 'abc' },
+      { _id: '1', title: 'test title', price: 1, notes: 'abc' },
     ],
     amount: 1,
     total: 100,

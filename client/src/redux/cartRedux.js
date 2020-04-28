@@ -49,10 +49,21 @@ export const saveCartRequest = data => {
 export const loadCartRequest = () => {
   return dispatch => {
     let getSavedCart;
-    localStorage.getItem('cart') ?
-      getSavedCart = JSON.parse(localStorage.getItem('cart')) : getSavedCart = [];
-    console.log('cart', getSavedCart);
+    const emptyCart = {
+      products: [],
+      amount: 0,
+      total: 0,
+      delivery: 10,
+      request: {
+        pending: false,
+        error: null,
+        success: null,
+      },
+    };
 
+    localStorage.getItem('cart') ?
+      getSavedCart = JSON.parse(localStorage.getItem('cart')) : getSavedCart = emptyCart;
+    dispatch(loadCart(getSavedCart));
   };
 };
 
@@ -125,7 +136,6 @@ export const reducer = (statePart = initialState, action = {}) => {
       const { _id, price } = action.payload.product;
 
       if (products.length) {
-
         let isInCart = false;
 
         for (let product of products) {
@@ -136,21 +146,20 @@ export const reducer = (statePart = initialState, action = {}) => {
 
         return {
           ...statePart,
-          products: products.map(el => {
-            return el._id === _id ?
-              { ...el, amount: el.amount + action.payload.amount }
-              : el;
-          }),
+          products: isInCart ?
+            products.map(el => {
+              return el._id === _id ?
+                { ...el, amount: el.amount + action.payload.amount }
+                : el;
+            })
+            : [...products, { ...action.payload.product, amount: action.payload.amount }],
           amount: statePart.amount + action.payload.amount,
           total: statePart.total + (price * action.payload.amount),
-        }
-
+        };
       } else {
         return {
           ...statePart,
-          products: [...products, { ...action.payload.product, amount: action.payload.amount }],
-          amount: statePart.amount + action.payload.amount,
-          total: statePart.total + (price * action.payload.amount),
+          products: [{ ...action.payload.product, amount: action.payload.amount }],
         };
       }
     }
@@ -196,9 +205,10 @@ export const reducer = (statePart = initialState, action = {}) => {
     case ERROR_REQUEST:
       return { ...statePart, request: { pending: false, error: action.error, success: false } };
     case LOAD_CART: {
-      return { ...statePart,
-        products: action.payload ? action.payload : [],
-      };
+      return action.payload ?
+        action.payload
+        :
+        { ...statePart, products: [] };
     }
     default: {
       return statePart;

@@ -45,7 +45,6 @@ class Component extends React.Component {
   }
 
   // shouldComponentUpdate(prevState) {
-  //   console.log('prevState', prevState);
   //   return prevState.cart !== this.props.cart;
   // }
 
@@ -127,7 +126,7 @@ class Component extends React.Component {
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = state => ({
   cart: getCart(state),
