@@ -33,6 +33,7 @@ class Component extends React.Component {
       email: '',
     },
     error: null,
+    open: true,
   };
 
 
@@ -61,6 +62,7 @@ class Component extends React.Component {
   };
 
   submitOrder = (e, cart, client) => {
+    console.log('cart', cart);
     e.preventDefault();
 
     const { firstName, lastName, email, address, city, country, postCode } = client;
@@ -68,9 +70,9 @@ class Component extends React.Component {
 
     let error = null;
 
-    if (!firstName || !lastName || !email || !address || !city || !country || !postCode) error = 'Provide your first and last name, address, city, country, post code and email to proceed';
-    else if (!cart.product.length) error = 'Your cart is empty';
+    if (!firstName || !lastName || !email || !address || !city || !country || !postCode) error = 'Provide all necessary details';
     else if (!validEmail.test(email)) error = 'Provide valid email';
+    else if (!cart.products.length) error = 'Your cart is empty';
 
     if (!error) {
       const payload = {
@@ -89,10 +91,14 @@ class Component extends React.Component {
     }
   };
 
+  closePopup = () => {
+    this.setState({ ...this.state, error: null, open: false });
+  }
+
   render() {
     const { className, cart } = this.props;
     const { client, error } = this.state;
-    const { handleChange } = this;
+    const { handleChange, closePopup } = this;
 
     return (
       <div className={clsx(className, styles.root)}>
@@ -100,7 +106,13 @@ class Component extends React.Component {
         <Container maxWidth="lg">
           <Paper className={styles.paper}>
 
-
+            {error ?
+              <div className={styles.errorMsg}>
+                {error}
+                <Button onClick={closePopup}>OK</Button>
+              </div>
+              : null
+            }
 
             <Grid container spacing={1} justify="space-around">
 

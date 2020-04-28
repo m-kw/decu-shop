@@ -11,6 +11,19 @@
   .paper {
     display: flex;
 
+    .errorMsg {
+      border: 1px solid $background-mid;
+      background: $primary;
+      text-align: center;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 0.5rem;
+      border-radius: 5px;
+      z-index: 9999;
+    }
+
     .card {
       margin: 10px;
       padding: 10px;
