@@ -67,33 +67,6 @@ export const loadCartRequest = () => {
   };
 };
 
-// export const loadCartRequest = () => {
-//   return () => {
-
-//     const cart = {
-//       products: [],
-//       amount: 0,
-//       total: 0,
-//     }
-
-//     localStorage.setItem('cart', JSON.stringify(cart));
-//   };
-// };
-
-// export const addToCartRequest = (data) => {
-//   console.log('data', data);
-//   return dispatch => {
-
-//     const cart = {
-//       products: [...products, { ...data.product, amount: data.amount }],
-//       amount: cart.amount + data.amount,
-//     }
-
-//     localStorage.setItem('cart', JSON.stringify(cart))
-//     dispatch(addProduct(data));
-//   };
-// };
-
 export const sendOrderRequest = (order) => {
   return async dispatch => {
 
@@ -101,7 +74,6 @@ export const sendOrderRequest = (order) => {
 
     try {
       let res = await axios.post(`${API_URL}/order`, order);
-      console.log('res', res);
 
       dispatch(sendOrder(res));
       dispatch(endRequest());
@@ -128,8 +100,6 @@ const initialState = {
 
 /* reducer */
 export const reducer = (statePart = initialState, action = {}) => {
-  console.log('state', statePart);
-  console.log('action', action);
   switch (action.type) {
     case ADD_TO_CART: {
       const { products } = statePart;

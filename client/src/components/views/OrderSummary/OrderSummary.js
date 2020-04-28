@@ -32,6 +32,7 @@ class Component extends React.Component {
       phone: '',
       email: '',
     },
+    error: null,
   };
 
 
@@ -62,22 +63,35 @@ class Component extends React.Component {
   submitOrder = (e, cart, client) => {
     e.preventDefault();
 
-    const payload = {
-      cart: {
-        products: cart.products,
-        amount: this.props.amount,
-        total: this.props.total,
-      },
-      client: client,
-    };
+    const { firstName, lastName, email, address, city, country, postCode } = client;
+    const validEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
 
-    this.props.sendOrder(payload);
+    let error = null;
+
+    if (!firstName || !lastName || !email || !address || !city || !country || !postCode) error = 'Provide your first and last name, address, city, country, post code and email to proceed';
+    else if (!cart.product.length) error = 'Your cart is empty';
+    else if (!validEmail.test(email)) error = 'Provide valid email';
+
+    if (!error) {
+      const payload = {
+        cart: {
+          products: cart.products,
+          amount: this.props.amount,
+          total: this.props.total,
+        },
+        client: client,
+      };
+
+      this.props.sendOrder(payload);
+
+    } else {
+      this.setState({ error });
+    }
   };
 
   render() {
     const { className, cart } = this.props;
-    console.log('order cart', cart);
-    const { client } = this.state;
+    const { client, error } = this.state;
     const { handleChange } = this;
 
     return (
@@ -85,6 +99,9 @@ class Component extends React.Component {
         <h2 className={styles.title}>Your order summary</h2>
         <Container maxWidth="lg">
           <Paper className={styles.paper}>
+
+
+
             <Grid container spacing={1} justify="space-around">
 
               <Grid item xs={12} lg={6}>
