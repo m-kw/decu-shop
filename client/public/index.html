@@ -39,5 +39,27 @@
       To begin the development, run `npm start` or `yarn start`.
       To create a production bundle, use `npm run build` or `yarn build`.
     -->
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.2/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+
+    <script>
+      // Your web app's Firebase configuration
+      var firebaseConfig = {
+        apiKey: "AIzaSyAwOIkwSZZVxOK_KG4n8iapi1HBa1ltzE4",
+        authDomain: "decu-shop.firebaseapp.com",
+        databaseURL: "https://decu-shop.firebaseio.com",
+        projectId: "decu-shop",
+        storageBucket: "decu-shop.appspot.com",
+        messagingSenderId: "119730369545",
+        appId: "1:119730369545:web:430e1885989f327cb174d8"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+    </script>
+
   </body>
 </html>
