@@ -19,7 +19,7 @@ const app = express();
 app.use(helmet());
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 
 /* SERVE STATIC FILES */
 app.use(express.static(path.join(__dirname + '/client/build')));

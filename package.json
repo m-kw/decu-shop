@@ -6,8 +6,10 @@
   "author": "Magda Kwiatkowska-Witoń <magda-kwiatkowska@wp.pl>",
   "license": "MIT",
   "scripts": {
+    "start": "set NODE_ENV='production' && node server.js",
+    "start-dev": "npm-run-all -l -p start:*",
+    "start:server": "set NODE_ENV='dev' && ./node_modules/.bin/nodemon server.js",
     "start:client": "cd client && yarn start",
-    "start:server": "nodemon server.js",
     "build": "cd client && yarn install && yarn build"
   },
   "dependencies": {
