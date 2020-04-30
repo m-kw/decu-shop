@@ -16,9 +16,11 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import ShoppingBasketIcon from '@material-ui/icons/ShoppingBasket';
 
 import { AmountWidget } from '../../common/AmountWidget/AmountWidget';
+import { MobileCartItem } from '../../common/MobileCartItem/MobileCartItem';
 
 import { connect } from 'react-redux';
 import { getCart, changeAmount, addNotes, removeProduct, loadCartRequest, saveCartRequest, getTotalPrice, getTotalAmount } from '../../../redux/cartRedux.js';
+import { getViewportMode } from '../../../redux/viewportRedux';
 
 import styles from './Cart.module.scss';
 
@@ -38,6 +40,7 @@ class Component extends React.Component {
     saveCart: PropTypes.func,
     total: PropTypes.number,
     amount: PropTypes.number,
+    mobile: PropTypes.bool,
   };
 
   componentDidMount() {
@@ -59,8 +62,10 @@ class Component extends React.Component {
   }
 
   render() {
-    const { className, cart, changeAmount, addNotes, removeProduct, total, amount } = this.props;
+    const { className, cart, changeAmount, addNotes, removeProduct, total, amount, mobile } = this.props;
     const { opened } = this.state;
+    console.log('props', this.props);
+    console.log('mobile', this.props.mobile);
 
     return (
       <div className={clsx(className, styles.root)}>
@@ -123,6 +128,22 @@ class Component extends React.Component {
           </Container>
           : null
         }
+
+        {mobile && opened ?
+          <Container className={styles.mobileContainer}>
+            {cart.products.length ?
+              cart.products.map(el => (
+                <MobileCartItem key={el._id} el={el} {...el} />
+              ))
+              :
+              <div className={styles.emptyCart}>
+                <span>Your cart is empty</span>
+              </div>
+            }
+            <Button color="primary" variant="contained" href="/orderSummary">Show my order</Button>
+          </Container>
+          : ''
+        }
       </div>
     );
   }
@@ -132,6 +153,7 @@ const mapStateToProps = state => ({
   cart: getCart(state),
   total: getTotalPrice(state),
   amount: getTotalAmount(state),
+  mobile: getViewportMode(state),
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -1,0 +1,18 @@
+@import '../../../styles/settings.scss';
+
+.root {
+  padding: 10px;
+  background: $font-light;
+  border-radius: 5px;
+  margin: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+
+  .mobileActions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
+}

@@ -34,8 +34,8 @@ const Component = ({ className, mobile }) => {
           </Button>
 
           {mobile ?
-          <Button onClick={handleClick}><MenuIcon/></Button>
-          : ''
+            <Button onClick={handleClick}><MenuIcon/></Button>
+            : ''
           }
 
           <div className={`${mobile ? styles.mobile : styles.menu} ${open ? styles.open : ''}`}>
