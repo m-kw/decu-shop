@@ -26,3 +26,27 @@
     // }
   }
 }
+
+@media (max-width:576px) {
+
+  .root {
+
+    .container {
+
+      .contact {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: inherit;
+
+        .contactForm {
+          margin: 0;
+        }
+
+        .contactDetails {
+          margin-top: 15px;
+        }
+      }
+    }
+  }
+}

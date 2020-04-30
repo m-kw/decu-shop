@@ -18,7 +18,7 @@ import styles from './Contact.module.scss';
 
 const Component = ({ className, children }) => (
   <div className={clsx(className, styles.root)} id='contact'>
-    <Container>
+    <Container className={styles.container}>
       <h2 className={styles.title}>Contact</h2>
       <Divider />
       <div className={styles.contact}>
