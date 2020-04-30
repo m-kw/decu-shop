@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { Header } from '../Header/Header';
@@ -7,37 +7,54 @@ import { Contact } from '../../layout/Contact/Contact';
 
 import clsx from 'clsx';
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { connect } from 'react-redux';
+import { changeViewport } from '../../../redux/viewportRedux.js';
 
 import styles from './MainLayout.module.scss';
 
-const Component = ({ className, children }) => (
-  <div className={clsx(className, styles.root)}>
-    <Header />
-    {children}
-    <Contact />
-    <Footer />
-  </div>
-);
+const isMobile = () => {
+  const mobile = '(max-width: 576px)';
+
+  if (window.matchMedia(`${mobile}`).matches) return true;
+  else return false;
+};
+
+const Component = ({ className, children, changeViewport }) => {
+
+  useEffect(() => {
+    changeViewport(isMobile());
+    window.addEventListener('resize', () => changeViewport(isMobile()));
+  });
+
+  return (
+    <div className={clsx(className, styles.root)}>
+      <Header />
+      {children}
+      <Contact />
+      <Footer />
+    </div>
+  );
+};
+
 
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  changeViewport: PropTypes.func,
 };
 
 // const mapStateToProps = state => ({
 //   someProp: reduxSelector(state),
 // });
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const mapDispatchToProps = dispatch => ({
+  changeViewport: mode => dispatch(changeViewport(mode)),
+});
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const Container = connect(null, mapDispatchToProps)(Component);
 
 export {
-  Component as MainLayout,
-  // Container as MainLayout,
+  // Component as MainLayout,
+  Container as MainLayout,
   Component as MainLayoutComponent,
 };

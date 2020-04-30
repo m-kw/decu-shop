@@ -4,11 +4,13 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { reducer as productsReducer } from './productsRedux';
 import { reducer as cartReducer } from './cartRedux';
+import { reducer as viewportReducer } from './viewportRedux';
 
 // define reducers
 const reducers = {
   products: productsReducer,
   cart: cartReducer,
+  mobile: viewportReducer,
 };
 
 const combinedReducers = combineReducers(reducers);
