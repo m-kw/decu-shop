@@ -60,6 +60,11 @@
       margin-left: 20px;
     }
   }
+
+  .emptyCart {
+    background: $font-light;
+    padding: 5px;
+  }
 }
 
 @media (max-width: 576px) {
