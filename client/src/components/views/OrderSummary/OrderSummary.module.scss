@@ -29,16 +29,37 @@
       padding: 10px;
     }
 
-    .products {
-      order: 2;
-    }
+    // .products {
+    //   order: 2;
+    // }
 
-    .total {
-      order: 3;
-    }
+    // .total {
+    //   order: 3;
+    // }
 
-    .billing {
-      order: 1;
+    // .billing {
+    //   order: 1;
+    // }
+  }
+}
+
+@media (max-width: 576px) {
+
+  .root {
+
+    .paper {
+
+      .gridItem {
+        width: inherit;
+      }
+
+      .summary {
+        order: 1;
+      }
+
+      .billing {
+        order: 2;
+      }
     }
   }
 }

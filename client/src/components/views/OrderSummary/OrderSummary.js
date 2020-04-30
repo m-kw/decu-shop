@@ -44,6 +44,7 @@ class Component extends React.Component {
     loadCart: PropTypes.func,
     total: PropTypes.number,
     amount: PropTypes.number,
+    history: PropTypes.object,
   };
 
   componentDidMount() {
@@ -85,6 +86,7 @@ class Component extends React.Component {
       };
 
       this.props.sendOrder(payload);
+      this.props.history.push('/');
 
     } else {
       this.setState({ error });
@@ -116,9 +118,9 @@ class Component extends React.Component {
 
             <Grid container spacing={1} justify="space-around">
 
-              <Grid item xs={12} lg={6}>
+              <Grid item xs={12} lg={6} className={styles.billing}>
                 <Grid container direction="column" justify="center" alignItems="center">
-                  <Grid item>
+                  <Grid item className={styles.gridItem}>
                     <Card elevation={3} className={clsx(styles.card, styles.billing)}>
                       <CardHeader title="Billing details" />
                       <BillingDetailsForm onChange={handleChange} client={client}>
@@ -129,17 +131,17 @@ class Component extends React.Component {
                 </Grid>
               </Grid>
 
-              <Grid item xs={12} lg={4}>
+              <Grid item xs={12} lg={4} className={styles.summary}>
                 <Grid container direction="column" justify="center" alignItems="stretch">
 
-                  <Grid item>
+                  <Grid item className={styles.gridItem}>
                     <Card elevation={3} className={clsx(styles.card, styles.products)}>
                       <CardHeader title="Products" />
                       <ProductsSummary cart={cart} />
                     </Card>
                   </Grid>
 
-                  <Grid item>
+                  <Grid item className={styles.gridItem}>
                     <Card elevation={3} className={clsx(styles.card, styles.total)}>
                       <CardHeader title="Cart total" />
                       <CostSummary cart={cart} />
